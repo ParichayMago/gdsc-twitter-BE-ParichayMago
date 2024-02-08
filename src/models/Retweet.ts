@@ -12,4 +12,4 @@ const likeSchema = new Schema<IRetweet>({
     RetweetAt : {type : Date , default : Date.now}
 })
 
-export const like = model<IRetweet>("like" , likeSchema)
+export const like = model<IRetweet>("Retweet" , likeSchema)
