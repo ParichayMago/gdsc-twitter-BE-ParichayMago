@@ -6,6 +6,7 @@ export interface IUser {
   email : string
   age: number
   password : string
+  conf_pass: string
   token: string
 }
 
@@ -14,6 +15,7 @@ const userSchema = new Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: {type : String , required: true },
+  conf_pass: {type : String , required: true },
   age : {type : Number , required: true },
   token : {type : String }
 })

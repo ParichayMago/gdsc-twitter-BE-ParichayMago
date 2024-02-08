@@ -10,7 +10,7 @@ interface ITweet {
 }
 
 const tweetSchema = new Schema<ITweet>({
-  userId : {type : mongoose.Schema.ObjectId , required:true},
+  userId : {type : mongoose.Schema.Types.ObjectId , required:true},
   content : {type : String , maxlength : 280},
   numberOfLikes : {type : Number ,default : 0},
   numberOfRetweets : {type : Number , default : 0},

@@ -2,13 +2,13 @@ import mongoose, { ObjectId, Schema, model } from "mongoose";
 
 interface ILike{
   userid : ObjectId
-  tweetid : ObjectId
+  Tweet_Id : ObjectId
   likedAt : Date
 }
 
 const likeSchema = new Schema<ILike>({
   userid : {type : mongoose.Schema.Types.ObjectId , required:true},
-  tweetid : {type : mongoose.Schema.Types.ObjectId , required : true},
+  Tweet_Id : {type : mongoose.Schema.Types.ObjectId , required : true},
   likedAt : {type : Date , default : Date.now}
 })
 
