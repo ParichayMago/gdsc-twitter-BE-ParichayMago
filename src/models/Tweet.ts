@@ -1,4 +1,4 @@
-import mongoose, {  ObjectId, Schema , model } from "mongoose";
+import mongoose, {  ObjectId, Schema , model, mongo } from "mongoose";
 
 interface ITweet {
   userId : ObjectId
@@ -7,6 +7,7 @@ interface ITweet {
   numberOfRetweets : number
   comments : string[]
   createdAt : Date
+  likes : ObjectId[]
 }
 
 const tweetSchema = new Schema<ITweet>({
@@ -15,7 +16,8 @@ const tweetSchema = new Schema<ITweet>({
   numberOfLikes : {type : Number ,default : 0},
   numberOfRetweets : {type : Number , default : 0},
   comments : [{type : String }],
-  createdAt : {type: Date , default : Date.now}
+  createdAt : {type: Date , default : Date.now},
+  likes : [{type : mongoose.Schema.Types.ObjectId}]
 })
 
 export const tweet = model<ITweet>("tweet" , tweetSchema)
