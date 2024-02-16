@@ -35,7 +35,7 @@ export const authenticateUser = async (
     }
 
 
-    req.body.loggedInUserId = userId;
+    req.body.userId = userId;
 
     next();
   } catch (error) {

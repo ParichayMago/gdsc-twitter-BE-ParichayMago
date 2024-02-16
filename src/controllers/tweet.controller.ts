@@ -12,10 +12,7 @@ export const insertTweet = async (
   try {
     const data = req.body;
 
-    const newTweet = tweet.create({
-      userId : data.loggedInUserId,
-      content : data.content,
-    });
+    const newTweet = tweet.create(data);
 
 
 
