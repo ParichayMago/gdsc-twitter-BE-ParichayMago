@@ -17,3 +17,7 @@ export interface TweetBody {
   createdAt : Date
   likes : ObjectId[]
 }
+
+export interface TweetRequestModel {
+  content : string
+}

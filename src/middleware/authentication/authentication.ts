@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../../models/User";
-import { IUser } from "../../models/User";
+import { User } from "../../models/data/User";
+import { IUser } from "../../models/data/User";
 
 
 export const authenticateUser = async (
@@ -11,7 +11,7 @@ export const authenticateUser = async (
 ) => {
   try {
 
-    const token = req.cookies.token;
+    const token = req.header("token");
 
     if (!token) {
       return res.status(401).json({ error: "Unauthorized: Missing token" });
@@ -35,7 +35,7 @@ export const authenticateUser = async (
     }
 
 
-    req.userId = userId;
+    req.body.loggedInUserId = userId;
 
     next();
   } catch (error) {
@@ -45,10 +45,3 @@ export const authenticateUser = async (
 };
 
 
-declare global {
-  namespace Express {
-    interface Request {
-      userId?: string;
-    }
-  }
-}

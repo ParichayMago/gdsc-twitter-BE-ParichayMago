@@ -2,7 +2,7 @@ import { Response , Request } from "express"
 import { SignUpBody } from "../types/types"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { User } from "../models/User"
+import { User } from "../models/data/User"
 
 export const registerController = async (req:Request<{} , {} , SignUpBody> , res:Response)=>{
   try{
@@ -12,7 +12,7 @@ export const registerController = async (req:Request<{} , {} , SignUpBody> , res
 
     let existingUser = await User.findOne({email})
     if(existingUser){
-      return res.status(400).json({error:"user already created"})
+      return res.status(409).json({error:"user already created"})
     }else{
       const user = new User({
         name , email , password : secPass , age
@@ -28,7 +28,7 @@ export const registerController = async (req:Request<{} , {} , SignUpBody> , res
       let token = jwt.sign(data, "$eldenRing");
       await user.save()
       res.cookie('token' , token , {httpOnly:true})
-      return res.json({msg : "user created" , details : user})
+      return res.json({msg : "user created" , token , details : user})
     }
 
   }catch(e){

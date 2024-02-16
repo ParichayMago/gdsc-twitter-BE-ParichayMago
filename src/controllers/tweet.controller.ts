@@ -1,23 +1,23 @@
 import { Response, Request } from "express";
-import { tweet} from "../models/Tweet";
+import { tweet} from "../models/data/Tweet";
 import mongoose from "mongoose";
-import { TweetBody } from "../types/types";
+import { TweetBody, TweetRequestModel } from "../types/types";
+import { withAuth } from "../types/withAuth";
 
 // Create a tweet
-export const createTweetController = async (
-  req: Request<{}, {}, TweetBody>,
+export const insertTweet = async (
+  req: Request<{}, {}, withAuth<TweetRequestModel>>,
   res: Response
 ) => {
   try {
-    const {userId} = req
-    const {content } = req.body;
+    const data = req.body;
 
-    const newTweet = new tweet({
-      userId,
-      content,
+    const newTweet = tweet.create({
+      userId : data.loggedInUserId,
+      content : data.content,
     });
 
-    await newTweet.save();
+
 
     res.status(201).json({ msg: "Tweet created successfully", tweet: newTweet });
   } catch (error) {
@@ -27,13 +27,13 @@ export const createTweetController = async (
 };
 
 // Read all tweets
-export const getAllTweetsController = async (
+export const fetchAll = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const {userId} = req
-    const tweets = await tweet.find({userId});
+    const data = req.body
+    const tweets = await tweet.find({userId : data.loggedInUserId});
 
     res.json({ tweets });
   } catch (error) {
@@ -43,7 +43,7 @@ export const getAllTweetsController = async (
 };
 
 // Read a single tweet by ID
-export const getTweetByIdController = async (
+export const fetchById = async (
   req: Request<{ id: string }>,
   res: Response
 ) => {
@@ -68,7 +68,7 @@ export const getTweetByIdController = async (
 };
 
 // Updataion
-export const updateTweetController = async (
+export const update = async (
   req: Request<{ id: string }, {}, Partial<TweetBody>>,
   res: Response
 ) => {
@@ -96,7 +96,7 @@ export const updateTweetController = async (
 };
 
 // Deletion
-export const deleteTweetController = async (
+export const deleteTweet = async (
   req: Request<{ id: string }>,
   res: Response
 ) => {
