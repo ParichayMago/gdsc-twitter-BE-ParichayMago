@@ -26,9 +26,8 @@ export const registerController = async (req:Request<{} , {} , SignUpBody> , res
       };
 
       let token = jwt.sign(data, "$eldenRing");
-      user.token = token
       await user.save()
-      return res.json({"message": "done"})
+      return res.cookie('token' , token , {httpOnly:true})
     }
 
   }catch(e){
