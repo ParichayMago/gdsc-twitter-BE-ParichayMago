@@ -6,7 +6,7 @@ import { User } from "../models/data/User"
 
 export const registerController = async (req:Request<{} , {} , SignUpBody> , res:Response)=>{
   try{
-    const {name , email, password , age} = req.body
+    const {name , email, password, dob} = req.body
     let secPass = await bcrypt.hash(password, 10);
 
 
@@ -15,9 +15,8 @@ export const registerController = async (req:Request<{} , {} , SignUpBody> , res
       return res.status(409).json({error:"user already created"})
     }else{
       const user = new User({
-        name , email , password : secPass , age
+        name , email , password : secPass , dob
       });
-
 
       const data = {
         user: {
