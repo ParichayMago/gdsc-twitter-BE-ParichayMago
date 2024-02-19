@@ -35,7 +35,7 @@ export const authenticateUser = async (
     }
 
 
-    req.body.userId = userId;
+    req.body.user= user;
 
     next();
   } catch (error) {

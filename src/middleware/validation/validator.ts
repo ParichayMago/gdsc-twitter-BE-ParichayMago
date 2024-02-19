@@ -9,7 +9,6 @@ export const userValidationRules = () => {
     body("password").isLength({ min: 5 }),
   ];
 
-
 };
 
 

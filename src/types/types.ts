@@ -1,10 +1,26 @@
 import { ObjectId } from "mongoose"
 
+// Http Status code 
+export enum HttpStatusCode {
+  OK = 200,
+  Created = 201,
+  Accepted = 202,
+  NoContent = 204,
+  BadRequest = 400,
+  Unauthorized = 401,
+  Forbidden = 403,
+  NotFound = 404,
+  MethodNotAllowed = 405,
+  InternalServerError = 500,
+}
+
+
 export interface SignUpBody{
   name:string
-  email : string
-  age: number
-  password : string
+  email : string,
+  password : string,
+  dob?: Date,
+  bio: String
 }
 
 
@@ -20,4 +36,12 @@ export interface TweetBody {
 
 export interface TweetRequestModel {
   content : string
+}
+
+export interface UserUpdateModel {
+  name: String,
+  email:String,
+  password: String,
+  dob: Date,
+  bio:String
 }

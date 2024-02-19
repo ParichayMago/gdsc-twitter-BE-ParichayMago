@@ -4,6 +4,8 @@ import authRouter from "./routes/auth"
 import { connectMongo } from "./db";
 import cookieParser from "cookie-parser"
 import tweetRouter from "./routes/tweet";
+import userRouter from "./routes/user"
+
 dotenv.config();
 
 const app: Express = express();
@@ -16,6 +18,7 @@ app.get("/", (req : Request, res : Response) => {
 });
 app.use("/api/auth" , authRouter )
 app.use("/api/tweet" , tweetRouter )
+app.use("/api/user", userRouter)
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
