@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose"
 
-// Http Status code 
+// Http Status code
 export enum HttpStatusCode {
   OK = 200,
   Created = 201,
@@ -44,4 +44,9 @@ export interface UserUpdateModel {
   password: String,
   dob: Date,
   bio:String
+}
+
+export interface loginBody{
+  email : string ,
+  password : string | Buffer
 }

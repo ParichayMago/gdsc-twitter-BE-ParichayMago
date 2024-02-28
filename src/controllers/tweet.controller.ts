@@ -11,8 +11,9 @@ export const insertTweet = async (
 ) => {
   try {
     const data = req.body;
-
     const newTweet = tweet.create(data);
+
+
 
     res.status(201).json({ msg: "Tweet created successfully", tweet: newTweet });
   } catch (error) {
