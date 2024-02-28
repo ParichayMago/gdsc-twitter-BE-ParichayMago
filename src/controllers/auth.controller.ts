@@ -4,6 +4,8 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { User } from "../models/data/User"
 
+
+// Registration of the user
 export const registerController = async (req:Request<{} , {} , SignUpBody> , res:Response)=>{
   try{
     const {name , email, password, dob, bio} = req.body

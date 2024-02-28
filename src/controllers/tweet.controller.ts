@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import { tweet} from "../models/data/Tweet";
 import mongoose from "mongoose";
-import { TweetBody, TweetRequestModel } from "../types/types";
+import { HttpStatusCode, TweetBody, TweetRequestModel } from "../types/types";
 import { withAuth } from "../types/withAuth";
 
 // Create a tweet
@@ -13,8 +13,6 @@ export const insertTweet = async (
     const data = req.body;
 
     const newTweet = tweet.create(data);
-
-
 
     res.status(201).json({ msg: "Tweet created successfully", tweet: newTweet });
   } catch (error) {
@@ -29,8 +27,7 @@ export const fetchAll = async (
   res: Response
 ) => {
   try {
-    const data = req.body
-    const tweets = await tweet.find({userId : data.loggedInUserId});
+    const tweets = await tweet.find({ });
 
     res.json({ tweets });
   } catch (error) {
@@ -38,6 +35,22 @@ export const fetchAll = async (
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+// Featching all the tweets of a specific user
+export const allTweetsOfTheUser = async(
+  req: Request<{}, {}, withAuth<TweetRequestModel>>,
+  res: Response
+) => {
+  try{
+    const userId = req.body.userId;
+
+    const tweets = await tweet.find({userId})
+
+    return res.status(HttpStatusCode.Accepted).json({tweets, "success": true})
+  } catch {
+    return res.status(HttpStatusCode.BadRequest).json({"success": false})
+  }
+}
 
 // Read a single tweet by ID
 export const fetchById = async (
@@ -64,7 +77,7 @@ export const fetchById = async (
   }
 };
 
-// Updataion
+// Updataion of the tweeet
 export const update = async (
   req: Request<{ id: string }, {}, Partial<TweetBody>>,
   res: Response
@@ -92,7 +105,7 @@ export const update = async (
   }
 };
 
-// Deletion
+// Deletion of the tweet
 export const deleteTweet = async (
   req: Request<{ id: string }>,
   res: Response

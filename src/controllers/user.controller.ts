@@ -3,6 +3,7 @@ import { User } from "../models/data/User"
 import { withAuth, withUser } from "../types/withAuth"
 import { HttpStatusCode, UserUpdateModel } from "../types/types"
 
+// Featching and updating the personal info about the user
 export const findAndUpdateUser = async (
   req: Request<{}, {}, withUser<UserUpdateModel>>,
   res: Response 
