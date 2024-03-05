@@ -20,7 +20,7 @@ export interface SignUpBody{
   email : string,
   password : string,
   dob?: Date,
-  bio: String
+  bio?: String
 }
 
 

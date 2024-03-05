@@ -7,7 +7,7 @@ export interface IUser {
   email : string
   password : string
   dob?: Date
-  bio: string
+  bio?: string
 }
 
 

@@ -38,7 +38,7 @@ export const registerController = async (req:Request<{} , {} , SignUpBody> , res
   }
 }
 
-export const login = async(req : Request <{} , {} , loginBody>, res : Response)=>{
+export const loginController = async(req : Request <{} , {} , loginBody>, res : Response)=>{
 
     const creds = req.body
 
