@@ -15,9 +15,9 @@ const tweetSchema = new Schema<ITweet>({
   content : {type : String , maxlength : 280},
   numberOfLikes : {type : Number ,default : 0},
   numberOfRetweets : {type : Number , default : 0},
-  comments : [{type : String }],
+  comments : [{type : String, default: 0 }],
   createdAt : {type: Date , default : Date.now},
-  likes : [{type : mongoose.Schema.Types.ObjectId}]
+  likes : [{type : mongoose.Schema.Types.ObjectId, default: 0}]
 })
 
 export const tweet = model<ITweet>("tweet" , tweetSchema)

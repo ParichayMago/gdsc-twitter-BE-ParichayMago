@@ -1,12 +1,14 @@
 import { Response , Request } from "express"
-import { SignUpBody, loginBody } from "../types/types"
+import { HttpStatusCode, SignUpBody, loginBody } from "../types/types"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { User } from "../models/data/User"
 
-
 // Registration of the user
-export const registerController = async (req:Request<{} , {} , SignUpBody> , res:Response)=>{
+export const registerController = async (
+  req:Request<{} , {} , SignUpBody> ,
+  res:Response
+  )=>{
   try{
     const {name , email, password, dob, bio} = req.body
 
@@ -39,25 +41,27 @@ export const registerController = async (req:Request<{} , {} , SignUpBody> , res
 }
 
 export const loginController = async(req : Request <{} , {} , loginBody>, res : Response)=>{
+  try{
 
     const creds = req.body
+    
+    let user = await User.findOne({email : creds.email})
+    if(!user){
+      return res.json({error:"please enter correct creds"})
+    }
+    
+    const passCompare = await bcrypt.compare(creds.password , user.password)
+    if(!passCompare){
+      return res.json({error:"please enter correct creds"})
+    }
 
-     let user = await User.findOne({email : creds.email})
-     if(!user){
-       return res.json({error:"please enter correct creds"})
-     }
+    const payloadObj  = {
+      id: user._id 
+    } 
 
-     const passCompare = await bcrypt.compare(creds.password , user.password)
-     if(!passCompare){
-       return res.json({error:"please enter correct creds"})
-     }
-
-     const data = {
-       user : {
-         id : user.id
-       }
-     }
-     let token = jwt.sign(data, '$love$eldenring');
-     return res.json({token});
-
+    let token = jwt.sign(payloadObj, '$eldenRing', {expiresIn: "1d"});
+    return res.status(HttpStatusCode.Accepted).json({token});
+} catch(e){
+  return res.status(HttpStatusCode.InternalServerError).send(e)
+  }  
 }

@@ -2,26 +2,24 @@ import { Response, Request } from "express";
 import { tweet} from "../models/data/Tweet";
 import mongoose from "mongoose";
 import { HttpStatusCode, TweetBody, TweetRequestModel } from "../types/types";
-import { withAuth } from "../types/withAuth";
+import { withUser, withAuth} from "../types/withAuth";
 
 // Create a tweet
 export const insertTweet = async (
-  req: Request<{}, {}, withAuth<TweetRequestModel>>,
+  req: Request<{}, {}, withUser<TweetRequestModel>>,
   res: Response
 ) => {
   try {
     const data = req.body;
-    const newTweet = tweet.create(data);
-
-
-
+    const userId = data.user._id
+    const newTweet = await tweet.create({content: data.content, userId: userId});
+  
     res.status(201).json({ msg: "Tweet created successfully", tweet: newTweet });
   } catch (error) {
     console.error("Error creating tweet:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 // Read all tweets
 export const fetchAll = async (
   req: Request,
@@ -29,7 +27,6 @@ export const fetchAll = async (
 ) => {
   try {
     const tweets = await tweet.find({ });
-
     res.json({ tweets });
   } catch (error) {
     console.error("Error fetching tweets:", error);

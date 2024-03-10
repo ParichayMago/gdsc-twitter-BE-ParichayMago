@@ -11,12 +11,15 @@ export const userValidationRules = () => {
 
 };
 
+export const userContinuation = ()=> [
+  body("email").isEmail(),
+  body("password").isLength({min: 5})
+]
 
 
 export const tweetValidationRules = () => {
   return [
-
-    body("content").isLength({ max: 280 }),
+    body("content").isLength({ max: 280, min: 1 }),
 
   ];
 };

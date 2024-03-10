@@ -17,8 +17,7 @@ const userSchema = new Schema<IUser>({
   password: {type : String , required: true },
   dob: {type : Date , required: false },
   bio: {type : String , required: false},
-
-
+  
 })
 
 export const User = model<IUser>("user" , userSchema)

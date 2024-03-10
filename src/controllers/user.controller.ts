@@ -11,7 +11,7 @@ export const findAndUpdateUser = async (
   try {
     const data = req.body;
 
-    const UpdateUser =  User.findOneAndUpdate({_id: data.user._id}, 
+    const UpdateUser =  User.findByIdAndUpdate({_id: data.user._id}, 
        data,
       { new:true }
     ); 
