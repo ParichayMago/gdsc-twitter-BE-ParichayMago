@@ -11,7 +11,7 @@ dotenv.config();
 
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.use(cookieParser())
 app.use(express.json());
 connectMongo()

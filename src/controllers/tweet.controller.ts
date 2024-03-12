@@ -3,6 +3,8 @@ import { tweet} from "../models/data/Tweet";
 import mongoose from "mongoose";
 import { HttpStatusCode, TweetBody, TweetRequestModel } from "../types/types";
 import { withUser, withAuth} from "../types/withAuth";
+import { IUser, User } from "../models/data/User";
+
 
 // Create a tweet
 export const insertTweet = async (
@@ -22,12 +24,30 @@ export const insertTweet = async (
 };
 // Read all tweets
 export const fetchAll = async (
-  req: Request,
+  req: Request<{}, {}, {}>,
   res: Response
 ) => {
   try {
-    const tweets = await tweet.find({ });
-    res.json({ tweets });
+    const tweets = await tweet.find({});
+    
+    // Extract userIds from tweets
+    const userIds = tweets.map(tweet => tweet.userId);
+
+    // Fetch user credentials for each userId
+    const userCreds = await User.find({ _id: {$in : userIds} });
+    
+    // Creating a hashmap with userIds to store user creds,
+    // Mapped the user with String user._id as by default it would be paired with object
+    const userCredsMap = new Map(userCreds.map((user) => [String(user._id), user]));
+
+    // Creating a map with tweet and there tweet authers creds 
+    // getting userCredentials by passing in the String form of userId which we got from tweet.userId
+    const userTweetsWithCreds = tweets.map((tweet) => ({
+      ...tweet.toObject(),
+      userCredentials: userCredsMap.get(`${tweet.userId}`)
+    }));
+
+    res.json({ tweets: userTweetsWithCreds });
   } catch (error) {
     console.error("Error fetching tweets:", error);
     res.status(500).json({ error: "Internal Server Error" });
