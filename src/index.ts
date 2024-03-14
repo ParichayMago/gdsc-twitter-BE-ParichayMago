@@ -5,13 +5,13 @@ import { connectMongo } from "./db";
 import cookieParser from "cookie-parser"
 import tweetRouter from "./routes/tweet";
 import userRouter from "./routes/user"
+import cors from "cors"
 
 dotenv.config();
 
-
-
 const app: Express = express();
 const port = process.env.PORT || 3001;
+app.use(cors())
 app.use(cookieParser())
 app.use(express.json());
 connectMongo()

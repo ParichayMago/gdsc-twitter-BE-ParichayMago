@@ -5,7 +5,8 @@ import { authenticateUser } from "../middleware/authentication/authentication";
 const tweetRouter = Router()
 
 tweetRouter.post("/create" ,tweetValidationRules() , validate , authenticateUser , insertTweet )
-tweetRouter.get("/fetch/all" ,tweetValidationRules() , validate , authenticateUser  ,  fetchAll )
+// removed authenticateUser() as dev test to get the data for FE, will put it back
+tweetRouter.get("/fetch/all" ,  fetchAll )
 tweetRouter.get("/fetch/:id" ,tweetValidationRules() , validate ,authenticateUser  ,  fetchById )
 tweetRouter.get("/fetch/:Userid" ,tweetValidationRules() , validate ,authenticateUser  ,  allTweetsOfTheUser)
 tweetRouter.delete("/delete/:id" ,tweetValidationRules() , validate ,authenticateUser  ,  deleteTweet )
