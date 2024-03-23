@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { User } from "../models/data/User"
-import { withAuth, withUser } from "../types/withAuth"
+import { withUser } from "../types/withAuth"
 import { HttpStatusCode, UserUpdateModel } from "../types/types"
 
 // Featching and updating the personal info about the user

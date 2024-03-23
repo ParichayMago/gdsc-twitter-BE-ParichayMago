@@ -1,4 +1,3 @@
-import { Response , Request } from "express"
 import { withUser } from "../types/withAuth"
 import { HttpStatusCode, TweetRequestModel } from "../types/types";
 import { validateTweetId } from "../middleware/validation/validator";

@@ -1,4 +1,4 @@
-import mongoose, {  ObjectId, Schema , model, mongo } from "mongoose";
+import mongoose, {  ObjectId, Schema , model} from "mongoose";
 
 export interface ITweet {
   userId : ObjectId,

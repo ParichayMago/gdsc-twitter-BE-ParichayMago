@@ -3,7 +3,7 @@ import { tweet} from "../models/data/Tweet";
 import mongoose from "mongoose";
 import { HttpStatusCode, TweetBody, TweetRequestModel } from "../types/types";
 import { withUser, withAuth} from "../types/withAuth";
-import { IUser, User } from "../models/data/User";
+import { User } from "../models/data/User";
 
 
 // Create a tweet
