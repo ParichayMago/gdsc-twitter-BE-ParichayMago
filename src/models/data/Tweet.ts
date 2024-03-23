@@ -1,7 +1,8 @@
 import mongoose, {  ObjectId, Schema , model, mongo } from "mongoose";
 
-interface ITweet {
-  userId : ObjectId
+export interface ITweet {
+  userId : ObjectId,
+  replyedId: ObjectId,
   content : string
   numberOfLikes : number
   numberOfRetweets : number
@@ -12,6 +13,7 @@ interface ITweet {
 
 const tweetSchema = new Schema<ITweet>({
   userId : {type : mongoose.Schema.Types.ObjectId , required:true},
+  replyedId: {type: mongoose.Schema.Types.ObjectId, required:false, default: null},
   content : {type : String , maxlength : 280},
   numberOfLikes : {type : Number ,default : 0},
   numberOfRetweets : {type : Number , default : 0},
