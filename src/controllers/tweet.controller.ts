@@ -33,7 +33,7 @@ export const fetchAll = async (
     // Extract userIds from tweets
     const userIds = tweets.map(tweet => tweet.userId);
 
-    // Fetch user credentials for each userId
+    
     const userCreds = await User.find({ _id: {$in : userIds} });
     
     // Creating a hashmap with userIds to store user creds,
