@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  username  String   @unique
+  email     String   @unique
+  college   String
+  bio       String?
+  password  String
+  pfp       String?
+  createdAt DateTime @default(now()) // Timestamp for when the user is created
+
+  tweets      Tweet[] // Relation to the tweets created by the user
+  likedTweets LikeTweets[] // Relation to liked tweets (through Like model)
+  bookmarks   Bookmark[] // Relation to bookmarked tweets
+}
+
+model Tweet {
+  id           Int        @id @default(autoincrement())
+  author       User       @relation(fields: [authorId], references: [id])
+  authorId     Int
+  content      String // Content of the tweet
+  replies      Tweet[]    @relation("TweetReplies") // Relation to replies (self-relation)
+  parentTweet  Tweet?     @relation("TweetReplies", fields: [replyIdTweet], references: [id]) // The tweet it replies to
+  replyIdTweet Int? // ID of the tweet this is replying to (optional)
+  likeContent  LikeTweets[] // Relation to likes on the tweet
+  bookmarks    Bookmark[] // Relation to users who bookmarked this tweet
+  createdAt    DateTime   @default(now()) // Timestamp for when the tweet is created
+  totalReplies Int        @default(0)
+  totalLikes   Int        @default(0)
+}
+
+model LikeTweets {
+  id        Int      @id @default(autoincrement())
+  tweet     Tweet    @relation(fields: [tweetId], references: [id])
+  tweetId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now()) // Timestamp for when the like is created
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  tweet     Tweet    @relation(fields: [tweetId], references: [id])
+  tweetId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+}

@@ -1,3 +1,4 @@
+import { strict } from "assert"
 import { ObjectId } from "mongoose"
 
 // Http Status code
@@ -16,11 +17,13 @@ export enum HttpStatusCode {
 
 
 export interface SignUpBody{
-  name:string
+  name:string,
+  username: string
   email : string,
+  college: string,
+  bio?: string,
   password : string,
-  dob?: Date,
-  bio?: String
+  pfp?: string
 }
 
 

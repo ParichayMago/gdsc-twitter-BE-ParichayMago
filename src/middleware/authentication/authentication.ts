@@ -11,9 +11,6 @@ export const authenticateUser = async (
   next: NextFunction
 ) => {
   try {
-    // Getting token from the header 
-    // note always put token without ""
-
     const token = req.header("token")
 
     if(!token) {
@@ -29,7 +26,6 @@ export const authenticateUser = async (
       return res.status(404).json({ error: "User not found" });
     } 
     req.body.user= user;
-    // console.log("This is teh user: ",user)
     next();
   } catch (error) {
     console.error("Error authenticating user:", error);

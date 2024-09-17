@@ -35,3 +35,4 @@ export const findAndUpdateUser = async (
     return res.status(HttpStatusCode.InternalServerError).json({"message": "Server side error", "success": false})
   }
 }
+
